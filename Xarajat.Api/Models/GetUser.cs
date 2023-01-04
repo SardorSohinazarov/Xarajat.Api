@@ -1,7 +1,7 @@
 ﻿namespace Xarajat.Api.Models;
 
-public class User
+public class GetUser
 {
     public int Id { get; set; }
-    public string Name { get; set; }
+    public string? Name { get; set; }
 }

@@ -7,4 +7,5 @@ public class Room
     public string Key { get; set; }
     public int AdminId { get; set; }
     public RoomStatus Status { get; set; }
+    public User Admin { get; set; }
 }
