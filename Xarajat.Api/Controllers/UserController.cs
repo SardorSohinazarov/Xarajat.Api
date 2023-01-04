@@ -16,9 +16,9 @@ public class UserController : ControllerBase
         this._xarajatDbContext = xarajatDbContext;
     }
     [HttpGet]
-    public List<Entities.User> GetUsers()
+    public IActionResult GetUsers()
     {
-        return _xarajatDbContext.Users.ToList();
+        return Ok(_xarajatDbContext.Users.ToList());
     }
 
     [HttpGet("{id}")]
@@ -31,7 +31,7 @@ public class UserController : ControllerBase
     }
 
     [HttpPost]
-    public List<Entities.User> AddUser(CreateUserModel userModel)
+    public IActionResult AddUser(CreateUserModel userModel)
     {
         var user = new Entities.User()
         {
@@ -42,19 +42,20 @@ public class UserController : ControllerBase
         };
         _xarajatDbContext.Users.Add(user);
         _xarajatDbContext.SaveChanges();
-        return _xarajatDbContext.Users.ToList();
+        return Ok(_xarajatDbContext.Users.ToList());
     }
 
     [HttpDelete]
-    public List<Entities.User> DeleteUser(int id)
+    public IActionResult DeleteUser(int id)
     {
         var deleteUser = _xarajatDbContext.Users.FirstOrDefault(x => x.Id == id);
-        if (deleteUser is not null)
-        {
-            _xarajatDbContext.Users.Remove(deleteUser);
-            _xarajatDbContext.SaveChanges();
-        }
-        return _xarajatDbContext.Users.ToList();
+        if (deleteUser is null)
+            return NotFound();
+
+        _xarajatDbContext.Users.Remove(deleteUser);
+        _xarajatDbContext.SaveChanges();
+
+        return Ok();
     }
 
     [HttpPut]
