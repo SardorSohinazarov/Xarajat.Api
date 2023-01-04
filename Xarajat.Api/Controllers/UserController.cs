@@ -74,4 +74,19 @@ public class UserController : ControllerBase
         return Ok(user);
     }
 
+    [HttpPost("join-room/{roomId}")]
+    public IActionResult JoinRoom(int roomId , string key , int userId)
+    {
+        var room = _xarajatDbContext.Rooms.FirstOrDefault(r => r.Id == roomId);
+
+        if (room == null || key != room.Key)
+            return NotFound();
+
+        var user = _xarajatDbContext.Users.FirstOrDefault(u => u.Id == userId);
+
+        user.RoomId = roomId;
+        _xarajatDbContext.SaveChanges();
+        return Ok(user);
+    }
+
 }

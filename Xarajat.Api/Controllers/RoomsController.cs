@@ -22,7 +22,11 @@ public class RoomsController : ControllerBase
     [HttpGet]
     public IActionResult GetRooms()
     {
-        return Ok(_xarajatDbContext.Rooms.ToList().Select(room=>ConvertToRoomModel(room)).ToList());
+        return Ok(_xarajatDbContext.Rooms
+            .Include(room => room.Admin)
+            .ToList().Select(room=>ConvertToRoomModel(room))
+            .ToList()
+        );
     }
     [HttpGet("{id}")]
     public IActionResult GetRoom(int id)
@@ -96,5 +100,15 @@ public class RoomsController : ControllerBase
             Id = user.Id,
             Name = user.Name
         };
+    }
+
+    [HttpGet("{id}/users")]
+    public IActionResult GetRoomUsers(int id)
+    {
+        var room = _xarajatDbContext.Rooms
+            .Include(r => r.Users)
+            .FirstOrDefault(r => r.Id == id);
+
+        return Ok(room.Users);
     }
 }
