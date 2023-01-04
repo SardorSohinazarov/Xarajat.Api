@@ -21,8 +21,7 @@ public class RoomsController : ControllerBase
     [HttpGet]
     public IActionResult GetRooms()
     {
-        var rooms = _xarajatDbContext.Rooms.Select(ConvertToGetRoomModel).ToList();
-        return Ok(rooms);
+        return Ok(_xarajatDbContext.Rooms.Select(ConvertToGetRoomModel).ToList());
     }
     [HttpGet("{id}")]
     public IActionResult GetRoom(int id)

@@ -42,7 +42,7 @@ public class UserController : ControllerBase
         };
         _xarajatDbContext.Users.Add(user);
         _xarajatDbContext.SaveChanges();
-        return Ok(_xarajatDbContext.Users.ToList());
+        return Ok(user);
     }
 
     [HttpDelete]
@@ -59,19 +59,19 @@ public class UserController : ControllerBase
     }
 
     [HttpPut]
-    public IActionResult UpdateUser(int id, UpdateUserModel updateuser)
+    public IActionResult UpdateUser(int id, UpdateUserModel updateUser)
     {
         var user = _xarajatDbContext.Users.FirstOrDefault(x => x.Id == id);
         if (user is null)
             return NotFound();
 
-        user.Email = updateuser.Email;
-        user.Name = updateuser.Name;
-        user.Phone = updateuser.Phone;
+        user.Email = updateUser.Email;
+        user.Name = updateUser.Name;
+        user.Phone = updateUser.Phone;
 
         _xarajatDbContext.SaveChanges();
 
-        return Ok(_xarajatDbContext.Users.ToList());
+        return Ok(user);
     }
 
 }
