@@ -53,4 +53,30 @@ public class RoomsController : ControllerBase
         _xarajatDbContext.SaveChanges();
         return Ok(room);
     }
+
+    [HttpPut]
+    public IActionResult UpdateRoom(int id , UpdateRoomModel updateRoomModel)
+    {
+        var room = _xarajatDbContext.Rooms.FirstOrDefault(room => room.Id == id);
+        if (room is null)
+            return NotFound();
+
+        room.Name = updateRoomModel.Name;
+        room.Status = updateRoomModel.Status;
+
+        _xarajatDbContext.SaveChanges();
+        return Ok();
+    }
+    
+    [HttpDelete]
+    public IActionResult DeleteRoom(int id)
+    {
+        var room = _xarajatDbContext.Rooms.FirstOrDefault(room => room.Id == id);
+        if (room is null)
+            return NotFound();
+
+        _xarajatDbContext.Rooms.Remove(room);
+        _xarajatDbContext.SaveChanges();
+        return Ok();
+    }
 }
