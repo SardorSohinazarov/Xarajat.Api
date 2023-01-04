@@ -31,8 +31,15 @@ public class UserController : ControllerBase
     }
 
     [HttpPost]
-    public List<Entities.User> GetUser(Entities.User user)
+    public List<Entities.User> AddUser(CreateUserModel userModel)
     {
+        var user = new Entities.User()
+        {
+            Name = userModel.Name,
+            Email = userModel.Email,
+            Phone = userModel.Phone,
+            CreatedTime = DateTime.Now
+        };
         _xarajatDbContext.Users.Add(user);
         _xarajatDbContext.SaveChanges();
         return _xarajatDbContext.Users.ToList();
@@ -51,7 +58,7 @@ public class UserController : ControllerBase
     }
 
     [HttpPut]
-    public IActionResult UpdateUser(int id, Entities.User updateuser)
+    public IActionResult UpdateUser(int id, UpdateUserModel updateuser)
     {
         var user = _xarajatDbContext.Users.FirstOrDefault(x => x.Id == id);
         if (user is null)
