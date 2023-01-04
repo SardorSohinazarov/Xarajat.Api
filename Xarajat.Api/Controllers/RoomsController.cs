@@ -21,22 +21,16 @@ public class RoomsController : ControllerBase
     [HttpGet]
     public IActionResult GetRooms()
     {
-        var rooms = _xarajatDbContext.Rooms.Select(room => new GetRoomModel()
-        {
-            Id = room.Id,
-            Name = room.Name,
-            Key = room.Key,
-            Status = room.Status
-        }).ToList();
+        var rooms = _xarajatDbContext.Rooms.Select(room => ConvertToGetRoomModel(room)).ToList();
         return Ok(rooms);
     }
     [HttpGet("{id}")]
-    public IActionResult GetRooms(int id)
+    public IActionResult GetRoom(int id)
     {
         var room = _xarajatDbContext.Rooms.FirstOrDefault(room => room.Id == id);
         if (room is null)
             return NotFound();
-        return Ok(room);
+        return Ok(ConvertToGetRoomModel(room));
     }
 
     [HttpPost]
@@ -51,7 +45,7 @@ public class RoomsController : ControllerBase
         };
         _xarajatDbContext.Add(room);
         _xarajatDbContext.SaveChanges();
-        return Ok(room);
+        return Ok(ConvertToGetRoomModel(room));
     }
 
     [HttpPut]
@@ -65,7 +59,7 @@ public class RoomsController : ControllerBase
         room.Status = updateRoomModel.Status;
 
         _xarajatDbContext.SaveChanges();
-        return Ok();
+        return Ok(ConvertToGetRoomModel(room));
     }
     
     [HttpDelete]
@@ -78,5 +72,16 @@ public class RoomsController : ControllerBase
         _xarajatDbContext.Rooms.Remove(room);
         _xarajatDbContext.SaveChanges();
         return Ok();
+    }
+
+    private GetRoomModel ConvertToGetRoomModel(Room room)
+    {
+        return new GetRoomModel
+        {
+            Id = room.Id,
+            Name = room.Name,
+            Key = room.Key,
+            Status = room.Status
+        };
     }
 }
