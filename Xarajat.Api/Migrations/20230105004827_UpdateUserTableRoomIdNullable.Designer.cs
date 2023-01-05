@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Xarajat.Api.Data;
 
@@ -10,9 +11,10 @@ using Xarajat.Api.Data;
 namespace Xarajat.Api.Migrations
 {
     [DbContext(typeof(XarajatDbContext))]
-    partial class XarajatDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230105004827_UpdateUserTableRoomIdNullable")]
+    partial class UpdateUserTableRoomIdNullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.12");

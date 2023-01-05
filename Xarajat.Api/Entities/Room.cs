@@ -10,8 +10,11 @@ public class Room
     public RoomStatus Status { get; set; }
 
     public int AdminId { get; set; }
-    [ForeignKey("AdminId")]
-    public User Admin { get; set; }
 
-    public List<User> Users { get; set; }   
+    [ForeignKey("AdminId")]
+    //[NotMapped]
+    public User Admin { get; set; }
+    //[NotMapped]
+    public List<User> Users { get; set; }
+    public List<Outlay> Outlays { get; set; }
 }

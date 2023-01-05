@@ -8,5 +8,5 @@ public class User
     public string Phone { get; set; }
     public DateTime CreatedTime { get; set; }
 
-    public int RoomId { get; set; }
+    public int? RoomId { get; set; }
 }
